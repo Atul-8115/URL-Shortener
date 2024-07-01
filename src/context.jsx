@@ -1,4 +1,4 @@
-import { Children, createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import useFetch from "./hooks/useFetch";
 import { getCurrentUser } from "./db/apiAuth";
 
@@ -21,7 +21,7 @@ const UrlProvider = ({children}) => {
 }
 
 export const UrlState = () => {
-    return useContext(UrlProvider)
+    return useContext(UrlContext)
 }
 
 export default UrlProvider
