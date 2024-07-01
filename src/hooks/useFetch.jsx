@@ -13,6 +13,7 @@ const useFetch = (cb, options = {}) => {
             const response = await cb(options, ...args);
             console.log("Printing response in custom hook -> ",response)
             setData(response);
+            setError(null)
         } catch (error) {
             setError(error)
         } finally {

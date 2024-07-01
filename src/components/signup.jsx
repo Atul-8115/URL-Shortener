@@ -39,6 +39,7 @@ const Signup = () => {
     }));
   }
   
+  console.log("Printing signup -> ",signup)
   const {data, error, loading, fn: fnSignup} = useFetch(signup, formData)
   console.log("Printing response from useFetch hook -> ",data, error, loading,fnSignup)
   const {fetchUser} = UrlState()

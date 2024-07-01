@@ -25,9 +25,9 @@ const Login = () => {
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  console.log("Printing searchParams -> ", searchParams)
+  
   const longLink = searchParams.get("createNew");
-  console.log("Printing long link -> ",longLink)
+  
   const [errors,setErros] = useState([])
 
   const handleInputChange = (e) => {
