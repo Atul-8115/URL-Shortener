@@ -6,6 +6,7 @@ import Dashboard from './pages/dashboard'
 import Auth from './pages/auth'
 import Link from './pages/link'
 import RedirectLink from './pages/redirectLink'
+import UrlProvider from './context'
 // This is my database password on superbase PandeyAtul#2002
 
 const router = createBrowserRouter([
@@ -39,8 +40,10 @@ const router = createBrowserRouter([
 function App() {
  
   return (
-    <RouterProvider router = {router}>
-    </RouterProvider>
+    <UrlProvider>
+       <RouterProvider router = {router}/>
+    </UrlProvider>
+    
   )
 }
 
