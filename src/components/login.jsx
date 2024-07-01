@@ -38,10 +38,13 @@ const Login = () => {
   }
   
   const {data, error, loading, fn: fnlogin} = useFetch(login, formData)
-  const {fetchUser} = UrlState();
+  const {fetchUser} = UrlState()
+
+
   useEffect(() => {
     if(error === null && data) {
-      navigate(`/dashboard?${longLink ? `createNew=${longLink}`: ""}`);
+      navigate(`/dashboard?${longLink ? `createNew=${longLink}`: ""}`)
+      fetchUser();
     }
   }, [data, error])
   const handleLogin = async() => {
