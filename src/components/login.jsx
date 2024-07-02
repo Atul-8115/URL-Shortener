@@ -39,6 +39,7 @@ const Login = () => {
   }
   
   const {data, error, loading, fn: fnlogin} = useFetch(login, formData)
+  console.log("Printing all information getting from useFetch in login -> ","data -> ",data," error-> ", error," loading-> ", loading)
   const {fetchUser} = UrlState()
 
 

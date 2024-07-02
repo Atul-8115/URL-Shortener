@@ -39,9 +39,10 @@ const Signup = () => {
     }));
   }
   
-  console.log("Printing signup -> ",signup)
-  const {data, error, loading, fn: fnSignup} = useFetch(signup, formData)
-  console.log("Printing response from useFetch hook -> ",data, error, loading,fnSignup)
+  // console.log("Printing signup -> ",signup)
+  // const response = useFetch(signup, formData)
+  const {data, loading = true, error, fn: fnSignup} = useFetch(signup, formData)
+  // console.log("Printing response from useFetch hook -> ",response)
   const {fetchUser} = UrlState()
 
 
@@ -51,6 +52,7 @@ const Signup = () => {
       fetchUser();
     }
   }, [error, loading])
+
   const handleSignup = async() => {
     setErros([])
     try {
@@ -67,7 +69,8 @@ const Signup = () => {
 
       await schema.validate(formData, {abortEarly: false});
 
-      await fnSignup()
+      const response = await fnSignup()
+      console.log("Printing response getting from fnSignup -> ",response)
     } catch (error) {
       const newErrors = {};
 
