@@ -1,13 +1,24 @@
-import React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Login from '../components/login'
 import Signup from '../components/signup'
+import { UrlState } from '@/context'
 
 const Auth = () => {
 
   const [searchParams] = useSearchParams()
+  const longLink = searchParams.get("createNew");
+  const navigate = useNavigate();
 
+  const {isAuthenticated, loading} = UrlState()
+
+  useEffect(() => {
+    if (isAuthenticated && !loading) {
+      navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ""}`)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated,loading])
 
   return (
     <div className='mt-28 flex flex-col items-center gap-10'>
