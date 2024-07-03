@@ -21,7 +21,8 @@ const Header = () => {
     const { user, fetchUser } = UrlState()
 
     const {loading, fn: fnLogout} = useFetch(logout)
-
+    let count = 0
+    console.log("Printing loading -> ",loading," count-> ",count++)
   return (
     <>
       <nav className='py-4 flex justify-between items-center'>
@@ -44,8 +45,10 @@ const Header = () => {
                         <DropdownMenuLabel>{user?.user_metadata?.name}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <LinkIcon className='mr-2 h-4 w-4'/>
-                            My Links
+                            <Link to="/dashboard" className='flex'>
+                                <LinkIcon className='mr-2 h-4 w-4'/>
+                                My Links
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem className="text-red-400">
                             <LogOut className='mr-2 h-4 w-4'/>
