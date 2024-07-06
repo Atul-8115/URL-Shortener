@@ -2,11 +2,10 @@ import supabase from "./supabase";
 
 
 export async function getUrls(user_id) {
-    const {data, error} = await supabase.from("urls").select("*").eq("user_id",user_id);
-
+    const { data, error } = await supabase.from("urls").select("*").eq("user_id", user_id);
     
-    if(error) {
-        console.log("ERROR MESSAGE: ",error.message)
+    if (error) {
+        console.log("ERROR MESSAGE: ", error.message);
         throw new Error("Unable to load URLs");
     }
 
@@ -14,27 +13,27 @@ export async function getUrls(user_id) {
 }
 
 export async function deleteUrl(id) {
-    const {data, error} = await supabase.from("urls").delete().eq("id",id);
+    const { data, error } = await supabase.from("urls").delete().eq("id", id);
 
-    if(error) {
-        console.log("ERROR MESSAGE: ",error.message)
-        throw new Error("Unable to delete the URL")
+    if (error) {
+        console.log("ERROR MESSAGE: ", error.message);
+        throw new Error("Unable to delete the URL");
     }
 
-    return data
+    return data;
 }
 
-export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
-    const short_url = Math.random().toString(36).substring(2,8);
+export async function createUrl({ title, longUrl, customUrl, user_id }, qrcode) {
+    const short_url = Math.random().toString(36).substring(2, 8);
     const fileName = `qr-${short_url}`;
 
-    const {error: storageError} = await supabase.storage.from('qrs').upload(fileName, qrcode)
+    const { error: storageError } = await supabase.storage.from('qrs').upload(fileName, qrcode);
 
-    if(storageError) throw new Error(storageError.message)
+    if (storageError) throw new Error(storageError.message);
 
-    const qr = `${supabase.supabaseUrl}/storage/v1/object/public/qrs/${fileName}`
+    const qr = `${supabase.supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
 
-    const {data,error} = await supabase.from("urls").insert([
+    const { data, error } = await supabase.from("urls").insert([
         {
             title,
             user_id,
@@ -45,44 +44,42 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
         }
     ]).select();
 
-    if(error) {
-        console.log("ERROR MESSAGE: ",error.message)
-        throw new Error("Error while creating short URL")
+    if (error) {
+        console.log("ERROR MESSAGE: ", error.message);
+        throw new Error("Error while creating short URL");
     }
 
     return data;
 }
 
 export async function getLongUrl(id) {
-    console.log("Printing id in getLongUrl-> ",id)
-    let {data, error} = await supabase
-                    .from("urls")
-                    .select("id, original_url")
-                    .or(`short_url.eq.${id},custom_url.eq.${id}`)
-                    .signle();
+    const { data, error } = await supabase
+        .from("urls")
+        .select("id, original_url")
+        .or(`short_url.eq.${id},custom_url.eq.${id}`)
+        .single();
     
-    console.log("Printing in getLongUrl -> ",data)
-    if(error) {
-        console.log("ERROR MESSAGE: ",error.message)
-        throw new Error("Unable to load the URL")
+    if (error) {
+        console.log("ERROR MESSAGE: ", error.message);
+        throw new Error("Unable to load the URL");
     }
 
-    return data
+    console.log("Printing data in getLongUrl -> ", data);
+    return data;
 }
 
-export async function getUrl({id, user_id}) {
-    const {data, error} = await supabase
-                    .from("urls")
-                    .select("*")
-                    .eq("id",id)
-                    .eq("user_id", user_id)
-                    .single();
-    if(error) {
-        console.log("ERROR MESSAGE: ",error.message)
+export async function getUrl({ id, user_id }) {
+    const { data, error } = await supabase
+        .from("urls")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", user_id)
+        .single();
+    
+    if (error) {
+        console.log("ERROR MESSAGE: ", error.message);
         throw new Error("Short Url not found");
     }
 
     return data;
 }
-
-

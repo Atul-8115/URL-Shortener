@@ -19,7 +19,6 @@ const parser = new UAParser();
 export const storeClicks = async ({ id, originalUrl}) => {
     try {
 
-        console.log("I'm here in storeClicks")
         const res = parser.getResult();
         const device = res.type || "desktop"
 

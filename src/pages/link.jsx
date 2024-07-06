@@ -32,7 +32,7 @@ const LinkPage = () => {
   const {user} = UrlState();
   const navigate = useNavigate();
 
-  console.log("Printing id and user -> ",id,user)
+  
 
   const {
     loading,
@@ -47,7 +47,7 @@ const LinkPage = () => {
     fn: fnStats,
   } = useFetch(getClicksForUrl,id)
 
-  console.log("Printing data in link page -> ",url, stats)
+  
 
   const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl, id)
 
@@ -60,11 +60,11 @@ const LinkPage = () => {
     navigate("/dashboard")
   }
 
-  console.log("Printing url -> ",url)
-  // let link = ""
-  // if(url) {
-  //   link = url?.custom_url ? url?.custom_url : url.short_url
-  // }
+  
+  let link = ""
+  if(url) {
+    link = url?.custom_url ? url?.custom_url : url.short_url
+  }
   return (
     <>
       {(loading || loadingStats) && (
@@ -74,11 +74,11 @@ const LinkPage = () => {
         <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
            <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
            <a
-            href={`http://localhost:5173/${id}`}
+            href={`${import.meta.env.VITE_BASE_URL}/${link}`}
             target="_blank"
             className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
           >
-            http://localhost:5173/{id}
+            {import.meta.env.VITE_BASE_URL}/{link}
           </a>
           <a
             href={url?.original_url}
@@ -95,7 +95,7 @@ const LinkPage = () => {
             <Button
                variant= "ghost"
                onClick={() => 
-                  navigator.clipboard.writeText(`http://localhost:5173/${id}`)
+                  navigator.clipboard.writeText(`${import.meta.env.VITE_BASE_URL}/${link}`)
                }
             >
               <Copy/>

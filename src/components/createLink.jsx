@@ -19,8 +19,7 @@ import useFetch from '@/hooks/useFetch';
 import { createUrl } from '@/db/apiUrl';
 import { BeatLoader } from 'react-spinners';
 
-
-export function CreateLink() {
+export default function CreateLink() {
     const {user} = UrlState();
   
     const navigate = useNavigate();
