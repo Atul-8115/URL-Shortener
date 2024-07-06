@@ -7,8 +7,12 @@ import { BarLoader } from 'react-spinners'
 
 const RedirectLink = () => {
   const { id } = useParams()
+
+  console.log("Printing id -> ",id)
  
   const {loading, data, fn} = useFetch(getLongUrl,id)
+
+  console.log("Printing data in refirectLink page -> ",data);
   
   const {loading: loadingStats, fn: fnStats} = useFetch(storeClicks,{
     id: data?.id,

@@ -11,7 +11,7 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BarLoader, BeatLoader } from 'react-spinners'
 
-const Link = () => {
+const LinkPage = () => {
 
   const downloadImage = () => {
     const imageUrl = url?.qr
@@ -32,6 +32,8 @@ const Link = () => {
   const {user} = UrlState();
   const navigate = useNavigate();
 
+  console.log("Printing id and user -> ",id,user)
+
   const {
     loading,
     data: url,
@@ -45,6 +47,8 @@ const Link = () => {
     fn: fnStats,
   } = useFetch(getClicksForUrl,id)
 
+  console.log("Printing data in link page -> ",url, stats)
+
   const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl, id)
 
   useEffect(() => {
@@ -56,10 +60,11 @@ const Link = () => {
     navigate("/dashboard")
   }
 
-  let link = ""
-  if(url) {
-    link = url?.custom_url ? url?.custom_url : url.short_url
-  }
+  console.log("Printing url -> ",url)
+  // let link = ""
+  // if(url) {
+  //   link = url?.custom_url ? url?.custom_url : url.short_url
+  // }
   return (
     <>
       {(loading || loadingStats) && (
@@ -69,11 +74,11 @@ const Link = () => {
         <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
            <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
            <a
-            href={`https://trimrr.in/${link}`}
+            href={`http://localhost:5173/${id}`}
             target="_blank"
             className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
           >
-            https://trimrr.in/{link}
+            http://localhost:5173/{id}
           </a>
           <a
             href={url?.original_url}
@@ -90,7 +95,7 @@ const Link = () => {
             <Button
                variant= "ghost"
                onClick={() => 
-                  navigator.clipboard.writeText(`https://trimrr.in/${link}`)
+                  navigator.clipboard.writeText(`http://localhost:5173/${id}`)
                }
             >
               <Copy/>
@@ -154,4 +159,4 @@ const Link = () => {
   )
 }
 
-export default Link
+export default LinkPage

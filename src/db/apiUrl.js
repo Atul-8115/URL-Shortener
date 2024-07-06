@@ -1,4 +1,3 @@
-import { UAParser } from "ua-parser-js";
 import supabase from "./supabase";
 
 
@@ -55,6 +54,7 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
 }
 
 export async function getLongUrl(id) {
+    console.log("Printing id in getLongUrl-> ",id)
     let {data, error} = await supabase
                     .from("urls")
                     .select("id, original_url")
